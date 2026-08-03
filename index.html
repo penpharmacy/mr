@@ -116,7 +116,7 @@
                 grid-template-columns: 1fr;
             }
         }
-        
+
         .leave-calendar-theme .panel {
             background: var(--paper);
             border: 1px solid var(--border);
@@ -193,7 +193,7 @@
             resize: vertical;
             min-height: 50px;
         }
-        
+
         .leave-calendar-theme button.primary {
             margin-top: 16px;
             width: 100%;
@@ -253,6 +253,42 @@
             box-shadow: 0 0 0 3px rgba(0,0,0,0.04);
         }
 
+        /* Leave Calendar List Panel Table */
+        .leave-calendar-theme .list-panel {
+            margin-top: 20px;
+        }
+        
+        .leave-calendar-theme table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+        }
+        
+        .leave-calendar-theme th, 
+        .leave-calendar-theme td {
+            text-align: left;
+            padding: 9px 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .leave-calendar-theme th {
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        .leave-calendar-theme .name-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .leave-calendar-theme .empty-note {
+            color: var(--muted);
+            font-size: 13px;
+            padding: 14px 2px;
+        }
+
         /* Leave Calendar Day Detail */
         .leave-calendar-theme .day-detail {
             margin-top: 16px;
@@ -290,77 +326,26 @@
             gap: 8px;
         }
         
-        .leave-calendar-theme .detail-entry .edit {
-            border: none;
-            background: none;
-            color: var(--accent);
-            cursor: pointer;
-            font-size: 14px;
-            line-height: 1;
-        }
-        
-        .leave-calendar-theme .detail-entry .del {
-            border: none;
-            background: none;
-            color: var(--danger);
-            cursor: pointer;
-            font-size: 16px;
-            line-height: 1;
-        }
-
-        /* Leave Calendar List Panel Table */
-        .leave-calendar-theme .list-panel {
-            margin-top: 20px;
-        }
-        
-        .leave-calendar-theme table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-        }
-        
-        .leave-calendar-theme th, 
-        .leave-calendar-theme td {
-            text-align: left;
-            padding: 9px 8px;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .leave-calendar-theme th {
-            color: var(--muted);
-            font-weight: 600;
-            font-size: 12px;
-        }
-        
-        .leave-calendar-theme .name-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .leave-calendar-theme .empty-note {
-            color: var(--muted);
-            font-size: 13px;
-            padding: 14px 2px;
-        }
-        
-        .leave-calendar-theme .edit-row {
-            border: none;
-            background: none;
-            color: var(--accent);
-            cursor: pointer;
-            font-size: 13px;
-            margin-right: 8px;
-        }
-        
+        .leave-calendar-theme .detail-entry .edit,
+        .leave-calendar-theme .detail-entry .del,
+        .leave-calendar-theme .edit-row,
         .leave-calendar-theme .del-row {
             border: none;
             background: none;
-            color: var(--danger);
             cursor: pointer;
-            font-size: 15px;
+            line-height: 1;
         }
         
+        .leave-calendar-theme .detail-entry .edit, .leave-calendar-theme .edit-row {
+            color: var(--accent);
+            font-size: 14px;
+        }
+        
+        .leave-calendar-theme .detail-entry .del, .leave-calendar-theme .del-row {
+            color: var(--danger);
+            font-size: 16px;
+        }
+
         .leave-calendar-theme .list-panel-head {
             display: flex;
             align-items: center;
@@ -654,7 +639,7 @@
             grid-template-columns: repeat(7,1fr);
             gap: 4px;
         }
-        
+
         .leave-calendar-theme .m-day {
             min-height: 78px;
             border-radius: 7px;
@@ -741,7 +726,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col custom-scrollbar">
 
     <!-- UNIFIED DASHBOARD NAVIGATION HEADER -->
     <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white shadow-xl sticky top-0 z-50 border-b border-amber-500/20">
@@ -918,22 +903,21 @@
                         </button>
                     </div>
 
-                    <!-- Hidden action buttons and indicator to keep UI extremely clean per request -->
+                    <!-- Hidden action buttons -->
                     <div class="hidden">
                         <button onclick="exportToCSV()"></button>
                         <button onclick="loadMockData()"></button>
-                        <!-- Hidden Connection indicator -->
                         <div id="connection-status-badge">เชื่อมต่อฐานข้อมูล Google Sheets เรียลไทม์</div>
                     </div>
                 </div>
 
-                <!-- DASHBOARD GRID LAYOUT (Optimized to 2 columns: Calendar on left, Daily detail on right) -->
+                <!-- DASHBOARD GRID LAYOUT -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     
-                    <!-- LEFT COLUMN: HORIZONTAL TOGGLES & CALENDAR GRID (8 cols) -->
+                    <!-- LEFT COLUMN: HORIZONTAL TOGGLES & CALENDAR GRID -->
                     <div class="lg:col-span-8 flex flex-col gap-5">
                         
-                        <!-- NEW LOCATION: Horizontal Manual Leave Toggles Section -->
+                        <!-- Manual Leave Toggles Section -->
                         <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-3">
                                 <h3 class="text-xs font-bold text-slate-700 uppercase flex items-center gap-1.5">
@@ -945,7 +929,7 @@
                                 </span>
                             </div>
                             <div class="grid grid-cols-3 sm:grid-cols-6 gap-2" id="manual-leave-toggles">
-                                <!-- Dynamic Manual Toggles rendered as horizontal wide row -->
+                                <!-- Dynamic Manual Toggles -->
                             </div>
                         </div>
 
@@ -984,7 +968,7 @@
                         </div>
                     </div>
 
-                    <!-- RIGHT COLUMN: DAILY DETAIL & OVERVIEW (4 cols) -->
+                    <!-- RIGHT COLUMN: DAILY DETAIL -->
                     <div class="lg:col-span-4 flex flex-col gap-6">
                         <!-- Daily Inspector Panel -->
                         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex-grow flex flex-col min-h-[450px]">
@@ -1005,7 +989,7 @@
                                 <!-- Dynamic list of positions and personnel -->
                             </div>
 
-                            <!-- Logs & Notes Area (Permanently hidden per request) -->
+                            <!-- Logs & Notes Area -->
                             <div id="detail-logs-block" class="hidden"></div>
                             <div id="detail-logs-container" class="hidden"></div>
                         </div>
@@ -1013,7 +997,7 @@
 
                 </div>
 
-                <!-- BOTTOM ROW: STAFF STATS (Permanently hidden as requested) -->
+                <!-- BOTTOM ROW: STAFF STATS (Hidden) -->
                 <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mt-2 hidden">
                     <h2 class="text-sm font-bold text-slate-800 mb-4 flex items-center justify-between">
                         <span class="flex items-center gap-2">
@@ -1028,7 +1012,6 @@
                 </div>
             </div>
         </div>
-
     </main>
 
     <!-- FOOTER -->
@@ -1042,7 +1025,24 @@
         <span id="toast-message">ข้อความแจ้งเตือนจากระบบ</span>
     </div>
 
-    <!-- TAB CONTROLLER SCRIPT -->
+    <!-- Global Modal Component -->
+    <div id="custom-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl w-11/12 max-w-md overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col" id="custom-modal-content">
+            <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 id="modal-title" class="font-bold text-slate-800 text-lg">แจ้งเตือน</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-rose-500 transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div class="p-6 text-slate-600 text-sm whitespace-pre-wrap leading-relaxed" id="modal-message">
+            </div>
+            <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold transition-colors shadow-sm">ตกลง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB CONTROLLER & UI SCRIPT -->
     <script>
         function switchTab(tabId) {
             // Hide both tab content wrappers
@@ -1057,7 +1057,7 @@
             btn1.className = "px-4 py-2 text-xs md:text-sm font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 flex items-center gap-2";
             btn2.className = "px-4 py-2 text-xs md:text-sm font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200 flex items-center gap-2 ml-1";
             
-            // Show selected tab container and apply active styling (Orange-Yellow tone)
+            // Show selected tab container and apply active styling
             const target = document.getElementById(tabId);
             if(target) {
                 target.classList.remove('hidden');
@@ -1067,11 +1067,44 @@
                 btn1.className = "px-4 py-2 text-xs md:text-sm font-semibold rounded-lg bg-amber-500 text-slate-950 shadow-md transition-all duration-200 flex items-center gap-2";
             } else if(tabId === 'tab-2') {
                 btn2.className = "px-4 py-2 text-xs md:text-sm font-semibold rounded-lg bg-amber-500 text-slate-950 shadow-md transition-all duration-200 flex items-center gap-2 ml-1";
-                // Trigger duty calendar re-render to ensure layout integrity
                 if(typeof updateCalendar === 'function') {
                     updateCalendar();
                 }
             }
+        }
+
+        // Modal Logic to replace alert()
+        function showCustomModal(title, message) {
+            const modal = document.getElementById('custom-modal');
+            const modalContent = document.getElementById('custom-modal-content');
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Trigger reflow for animation
+            void modal.offsetWidth;
+            
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('custom-modal');
+            const modalContent = document.getElementById('custom-modal-content');
+            
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
         }
     </script>
 
@@ -1146,7 +1179,7 @@
           }
         }
         
-        // 3. คำนวณวันหยุดชดเชยอัตโนมัติ (หากตกเสาร์-อาทิตย์ ให้ชดเชยวันจันทร์ หรือวันทำการถัดไป)
+        // 3. คำนวณวันหยุดชดเชยอัตโนมัติ
         const allDates = Object.keys(holidays).sort();
         const substitutions = {};
         let songkranSubAdded = false;
@@ -1158,9 +1191,7 @@
           const d = parseISO(dateStr);
           const dow = d.getDay();
           
-          // ตรงกับวันอาทิตย์ (0) หรือ วันเสาร์ (6)
           if (dow === 0 || dow === 6) {
-            // เงื่อนไขพิเศษสำหรับสงกรานต์: ชดเชยแค่วันเดียวแม้จะชนเสาร์-อาทิตย์ 2 วัน
             if (name === "วันสงกรานต์") {
               if (songkranSubAdded) continue;
               songkranSubAdded = true;
@@ -1172,7 +1203,6 @@
               const nextDateStr = toISO(nextDate);
               const nextDow = nextDate.getDay();
               
-              // หาวันจันทร์-ศุกร์ถัดไป ที่ยังไม่ใช่วันหยุด หรือวันหยุดชดเชย
               if (nextDow !== 0 && nextDow !== 6 && !holidays[nextDateStr] && !substitutions[nextDateStr]) {
                 substitutions[nextDateStr] = `ชดเชย${name}`;
                 break;
@@ -1181,14 +1211,12 @@
           }
         }
         
-        // บันทึกลง Cache สำหรับปีนั้น
         _holidayCache[year] = { ...holidays, ...substitutions };
       }
       
       return _holidayCache[year][isoStr];
     }
     // ==========================================
-
 
     let leaves = [];
     let viewDate = new Date();
@@ -1283,21 +1311,21 @@
         el.textContent = '⏳ กำลังบันทึกข้อมูล...';
         el.classList.add('warn');
       } else if(state === 'local'){
-        el.textContent = '⚠️ โหมดออฟไลน์ (เปิดได้ทุกเครื่อง แต่ยังซิงก์ไม่ได้)';
+        el.textContent = '⚠️ โหมดออฟไลน์';
         el.classList.add('warn');
       } else {
-        el.textContent = '❌ ซิงก์ล้มเหลว (แตะเพื่ออ่านวิธีแก้ไข)';
+        el.textContent = '❌ ซิงก์ล้มเหลว';
         el.classList.add('err');
       }
     }
 
     document.getElementById('sync-badge').addEventListener('click', ()=>{
       if(!SHEET_WEB_APP_URL){
-        alert('ระบบไม่พบ URL สำหรับเชื่อมต่อฐานข้อมูล Google Sheets');
+        showCustomModal('ข้อผิดพลาดการเชื่อมต่อ', 'ระบบไม่พบ URL สำหรับเชื่อมต่อฐานข้อมูล Google Sheets');
       } else if(lastSyncDetail){
-        alert('รายละเอียดสถานะความขัดข้อง:\n\n' + lastSyncDetail);
+        showCustomModal('รายละเอียดสถานะความขัดข้อง', lastSyncDetail);
       } else {
-        alert('เชื่อมต่อกับชีต "calen" ของคุณเรียบร้อยและใช้งานได้ปกติ ข้อมูลอัปเดตแบบ Real-time ทั่วโลก!');
+        showCustomModal('สถานะปกติ', 'เชื่อมต่อกับชีต "calen" ของคุณเรียบร้อยและใช้งานได้ปกติ ข้อมูลอัปเดตแบบ Real-time ทั่วโลก!');
       }
     });
 
@@ -1472,7 +1500,6 @@
         const dow = cell.date.getDay();
         const dayLeaves = leavesOnDate(iso);
         
-        // ใช้วิธีดึงข้อมูลวันหยุดจากระบบคำนวณอัตโนมัติ
         const holidayName = getHoliday(iso); 
 
         const div = document.createElement('div');
@@ -1515,7 +1542,6 @@
       const box = document.getElementById('day-detail');
       const d = parseISO(iso);
       
-      // ใช้วิธีดึงข้อมูลวันหยุดจากระบบคำนวณอัตโนมัติ
       const holidayName = getHoliday(iso);
       
       document.getElementById('detail-title').textContent =
@@ -1573,7 +1599,7 @@
       const activeLeaves = leaves.filter(l => l.end >= todayStr);
 
       if(activeLeaves.length === 0){
-        wrap.innerHTML = `<div class="empty-note">ไม่มีข้อมูลประวัติวันลาในปัจจุบันและอนาคต (ประวัติในอดีตจะคงค้างอยู่บนปฏิทินเท่านั้น)</div>`;
+        wrap.innerHTML = `<div class="empty-note">ไม่มีข้อมูลประวัติวันลาในปัจจุบันและอนาคต</div>`;
         return;
       }
       
@@ -1850,7 +1876,6 @@
       showDayDetail(toISO(new Date()));
     });
 
-    // ตรวจซิงก์ข้อมูลจากเซิร์ฟเวอร์แบบเงียบเบื้องหลัง
     async function backgroundSync(){
       if(!SHEET_WEB_APP_URL) return;
       try{
@@ -1860,7 +1885,6 @@
           if(Array.isArray(rows)){
             const newLeaves = rows.map(sheetRowToLeave);
             
-            // ตรวจสอบว่ามีการเปลี่ยนแปลงข้อมูลจากเซิร์ฟเวอร์หรือไม่
             const oldData = JSON.stringify(leaves);
             const newData = JSON.stringify(newLeaves);
             
@@ -1875,7 +1899,7 @@
           }
         }
       }catch(e){
-        console.warn('การดึงข้อมูลพื้นหลังอัตโนมัติล้มเหลว (บราวเซอร์จะลองซิงก์ใหม่ในรอบถัดไป):', e);
+        console.warn('การดึงข้อมูลพื้นหลังอัตโนมัติล้มเหลว:', e);
       }
     }
 
@@ -1891,15 +1915,12 @@
       setupPeriodField();
       renderDateChips();
 
-      // ดึงข้อมูลในเครื่องมาขึ้นก่อน จากนั้นเรียกเชื่อมข้อมูลจริงจาก Google Sheets
       await loadLeaves();
       renderMonths();
       renderList();
 
-      // แสดงข้อมูลรายละเอียดการลาปัจจุบันเฉพาะวันปัจจุบันโดยอัตโนมัติ
       showDayDetail(toISO(new Date()));
 
-      // สั่งเบื้องหลังทำงานรอบละ 3 วินาที
       setInterval(backgroundSync, 3000);
     })();
     </script>
@@ -1909,7 +1930,7 @@
         // ----------------- CONFIGURATION & CONSTANTS -----------------
         const DEFAULT_SHEET_URL = "https://docs.google.com/spreadsheets/d/10euYdImtO7uMZlVK5MSwkU5kJKkBBi3Phuv5c2fMyMI/edit?usp=sharing";
 
-        // รายชื่อเจ้าหน้าที่หลัก 6 คน
+        // รายชื่อเจ้าหน้าที่หลัก 6 คน (รวมกิ้มด้วย)
         const ALL_STAFF = ["แอ๋ม", "เบิด", "หลิว", "แปง", "เพ็ญ", "กิ้ม"];
 
         // ผังเวรประจำวันตามวันในสัปดาห์ (Day Shift Mapping)
@@ -1925,16 +1946,16 @@
         const monthlyStaff = {
             "2026-06": {'C':'แอ๋ม', 'D':'เบิด', 'E':'หลิว', 'F':'แปง', 'A':'เพ็ญ', 'B':'กิ้ม'},
             "2026-07": {'B':'แอ๋ม', 'C':'เบิด', 'D':'หลิว', 'E':'แปง', 'F':'เพ็ญ', 'A':'กิ้ม'},
-            "2026-08": {'A':'แอ๋ม', 'B':'เบิด', 'C':'หลิว', 'D':'แปง', 'E':'เพ็ญ', 'F':'กิ๊ม'},
-            "2026-09": {'F':'แอ๋ม', 'A':'เบิด', 'B':'หลิว', 'C':'แปง', 'D':'เพ็ญ', 'E':'กิ๊ม'},
-            "2026-10": {'E':'แอ๋ม', 'F':'เบิด', 'A':'หลิว', 'B':'แปง', 'C':'เพ็ญ', 'D':'กิ๊ม'},
-            "2026-11": {'D':'แอ๋ม', 'E':'เบิด', 'F':'หลิว', 'A':'แปง', 'B':'เพ็ญ', 'C':'กิ๊ม'},
-            "2026-12": {'C':'แอ๋ม', 'D':'เบิด', 'E':'หลิว', 'F':'แปง', 'A':'เพ็ญ', 'B':'กิ๊ม'},
-            "2027-01": {'B':'แอ๋ม', 'C':'เบิด', 'D':'หลิว', 'E':'แปง', 'F':'เพ็ญ', 'A':'กิ๊ม'},
-            "2027-02": {'A':'แอ๋ม', 'B':'เบิด', 'C':'หลิว', 'D':'แปง', 'E':'เพ็ญ', 'F':'กิ๊ม'},
-            "2027-03": {'F':'แอ๋ม', 'A':'เบิด', 'B':'หลิว', 'C':'แปง', 'D':'เพ็ญ', 'E':'กิ๊ม'},
-            "2027-04": {'E':'แอ๋ม', 'F':'เบิด', 'A':'หลิว', 'B':'แปง', 'C':'เพ็ญ', 'D':'กิ๊ม'},
-            "2027-05": {'D':'แอ๋ม', 'E':'เบิด', 'F':'หลิว', 'A':'แปง', 'B':'เพ็ญ', 'C':'กิ๊ม'}
+            "2026-08": {'A':'แอ๋ม', 'B':'เบิด', 'C':'หลิว', 'D':'แปง', 'E':'เพ็ญ', 'F':'กิ้ม'},
+            "2026-09": {'F':'แอ๋ม', 'A':'เบิด', 'B':'หลิว', 'C':'แปง', 'D':'เพ็ญ', 'E':'กิ้ม'},
+            "2026-10": {'E':'แอ๋ม', 'F':'เบิด', 'A':'หลิว', 'B':'แปง', 'C':'เพ็ญ', 'D':'กิ้ม'},
+            "2026-11": {'D':'แอ๋ม', 'E':'เบิด', 'F':'หลิว', 'A':'แปง', 'B':'เพ็ญ', 'C':'กิ้ม'},
+            "2026-12": {'C':'แอ๋ม', 'D':'เบิด', 'E':'หลิว', 'F':'แปง', 'A':'เพ็ญ', 'B':'กิ้ม'},
+            "2027-01": {'B':'แอ๋ม', 'C':'เบิด', 'D':'หลิว', 'E':'แปง', 'F':'เพ็ญ', 'A':'กิ้ม'},
+            "2027-02": {'A':'แอ๋ม', 'B':'เบิด', 'C':'หลิว', 'D':'แปง', 'E':'เพ็ญ', 'F':'กิ้ม'},
+            "2027-03": {'F':'แอ๋ม', 'A':'เบิด', 'B':'หลิว', 'C':'แปง', 'D':'เพ็ญ', 'E':'กิ้ม'},
+            "2027-04": {'E':'แอ๋ม', 'F':'เบิด', 'A':'หลิว', 'B':'แปง', 'C':'เพ็ญ', 'D':'กิ้ม'},
+            "2027-05": {'D':'แอ๋ม', 'E':'เบิด', 'F':'หลิว', 'A':'แปง', 'B':'เพ็ญ', 'C':'กิ้ม'}
         };
 
         // ----------------- STATE CONSTANTS -----------------
@@ -2136,6 +2157,7 @@
                 for (const name of ALL_STAFF) {
                     const normRaw = rawName.replace(/๊/g, '้').trim();
                     const normSearch = name.replace(/๊/g, '้').trim();
+                    // ตรวจสอบครอบคลุมชื่อของ กิ้ม และคนอื่นๆ
                     if (normRaw.includes(normSearch) || rawName.includes(name)) {
                         staffName = name;
                         break;
@@ -2244,6 +2266,7 @@
         }
 
         function getLeaveTypeForStaffOnDate(dateStr, name) {
+            // ดึงข้อมูลวันลาจากตัวแปร leaves ที่ถูกโหลดใน Tab 1 (ซิงค์แบบเรียลไทม์)
             const d = parseISO(dateStr);
             const tab1Match = leaves.find(l => {
                 const s = parseISO(l.start);
@@ -2254,6 +2277,7 @@
                 return tab1Match.type; // ประชุม, ลาพักผ่อน, ลากิจ
             }
 
+            // ถ้าไม่มีใน Tab 1 ให้ดูจาก CSV (Tab 2)
             const key = `${dateStr}_${name}`;
             if (parsedLeaveTypes && parsedLeaveTypes[key]) {
                 return parsedLeaveTypes[key];
@@ -2394,7 +2418,9 @@
 
             const sheetLeaves = leaveRecords[dateStr] || [];
             const manualLeavesOnDate = manualLeaves[dateStr] || [];
-            const leavesOnDate = Array.from(new Set([...sheetLeaves, ...manualLeavesOnDate]));
+            // ดึงรายชื่อการลาจากตัวแปร leaves (จาก Tab 1 ที่ซิงก์เรียลไทม์) มาเพิ่ม
+            const realtimeLeaves = leavesOnDate(dateStr).map(l => l.name);
+            const allLeavesOnDate = Array.from(new Set([...sheetLeaves, ...manualLeavesOnDate, ...realtimeLeaves]));
 
             const arvInfo = isSecondTuesdayOrThursday(dateStr);
             const replacementLogs = [];
@@ -2429,7 +2455,7 @@
             if (arvInfo.isARV) {
                 const birdPos = getBirdOriginalPosition();
                 const activeNcdUser = ncd;
-                const isBirdOnLeave = leavesOnDate.includes("เบิด");
+                const isBirdOnLeave = allLeavesOnDate.includes("เบิด");
 
                 if (isBirdOnLeave) {
                     arv = "ว่าง (ไม่มีผู้แทน - เบิดลา)";
@@ -2463,13 +2489,13 @@
 
             // 2. Daily Leave replacements mapping
             const assignedPeople = [opd1, opd2, ipd, verify, ncd, rider, arv];
-            let activeLeaves = leavesOnDate.filter(name => {
+            let activeLeaves = allLeavesOnDate.filter(name => {
                 return assignedPeople.some(person => person && person.includes(name));
             });
 
             // ตรวจสอบเงื่อนไขข้อตกลง: "กรณี เบิด ตรงกับ ARV ก็จะไม่ลงว่า เบิดลา" (ยกเว้นเบิดลาจริง)
             if (arvInfo.isARV) {
-                if (!leavesOnDate.includes("เบิด")) {
+                if (!allLeavesOnDate.includes("เบิด")) {
                     activeLeaves = activeLeaves.filter(name => name !== "เบิด");
                 }
             }
@@ -2623,7 +2649,7 @@
             if (ncdVacant) {
                 const cleanNcdName = extractCleanName(ncd);
                 const reasonText = getReasonText(cleanNcdName);
-                if (leavesOnDate.includes(cleanNcdName)) {
+                if (allLeavesOnDate.includes(cleanNcdName)) {
                     finalDuties['NCD'] = `ว่าง (${reasonText})`;
                 } else {
                     finalDuties['NCD'] = "ว่าง (ไปช่วยงานแทน)";
@@ -2637,7 +2663,7 @@
             if (riderVacant) {
                 const cleanRiderName = extractCleanName(rider);
                 const reasonText = getReasonText(cleanRiderName);
-                if (leavesOnDate.includes(cleanRiderName)) {
+                if (allLeavesOnDate.includes(cleanRiderName)) {
                     finalDuties['rider'] = `ว่าง (${reasonText})`;
                 } else {
                     finalDuties['rider'] = "ว่าง (ไปช่วยงานแทน)";
@@ -2885,8 +2911,11 @@
             const manualContainer = document.getElementById("manual-leave-toggles");
             manualContainer.innerHTML = "";
             
+            // เช็คว่ามีใครลาใน Tab 1 ของวันนี้บ้าง
+            const realtimeLeavesForToday = leavesOnDate(dateStr).map(l => l.name);
+
             ALL_STAFF.forEach(name => {
-                const isSheetLeave = leaveRecords[dateStr] && leaveRecords[dateStr].includes(name);
+                const isSheetLeave = (leaveRecords[dateStr] && leaveRecords[dateStr].includes(name)) || realtimeLeavesForToday.includes(name);
                 const isManualLeave = manualLeaves[dateStr] && manualLeaves[dateStr].includes(name);
                 
                 const btn = document.createElement("button");
@@ -3066,8 +3095,8 @@
                 "2026-07-02": ["หลิว"],
                 "2026-07-03": ["เบิด", "แอ๋ม"],
                 "2026-07-09": ["แปง"],
-                "2026-07-13": ["แปง", "กิ๊ม"],
-                "2026-07-14": ["แปง", "กิ๊ม"]
+                "2026-07-13": ["แปง", "กิ้ม"],
+                "2026-07-14": ["แปง", "กิ้ม"]
             };
             showToast("สลับเปลี่ยนใช้ระบบจำลองข้อมูลเรียบร้อย");
             updateCalendar();
